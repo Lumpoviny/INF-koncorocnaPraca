@@ -14,6 +14,8 @@ y = 750
 canvas=Canvas(master, width=width, height=height)
 canvas.pack()
 ### ?OBJEKTY ###
+prehraLabel=Label(master,text="", font=("Courier", 30))
+prehraLabel.pack()
 ### !TANK ###
 lavyPas=canvas.create_rectangle(x-30, y-30, x-30+5, y+30, fill="#1b4332")
 pravyPas=canvas.create_rectangle(x+30, y-30, x+30-5, y+30, fill="#1b4332")
@@ -21,7 +23,7 @@ korba=canvas.create_rectangle(x-25, y-25, x+25, y+25, fill="#40916c")
 delo=canvas.create_rectangle(x-2.5, y-50, x+2.5, y, fill="#95d5b2")
 poloha="up"
 ### !PREKÁŽKY ###
-prekazkyFile = open("prekazky.txt", "r")
+prekazkyFile = open("INF-koncorocnaPraca\prekazky.txt", "r")
 prekazky = prekazkyFile.read().split("\n")
 prekazky = list(filter(None, prekazky))
 def getCoordinates(lst):
@@ -92,14 +94,15 @@ def rotateRight(event):
     poloha="right"
 
 def reset(event):
-    global x, y, poloha
+    global x, y, poloha, prehraLabel
+    y=750
+    x=500
     canvas.coords(delo,x-2.5,y-50,x+2.5,y)
     canvas.coords(korba,x-25, y-25, x+25, y+25)
     canvas.coords(lavyPas,x-30, y-30, x-30+5, y+30)
     canvas.coords(pravyPas,x+30, y-30, x+30-5, y+30)
     poloha="up"
-    y=750
-    x=500
+    prehraLabel.configure(text="")
     canvas.update()
     master.after(1, pohyb)
 
@@ -111,7 +114,7 @@ def pohyb():
     global blockade
     obstacle=False
     ##!PREKAZKY##
-    prekazkyFile = open("prekazky.txt", "r")
+    prekazkyFile = open("INF-koncorocnaPraca\prekazky.txt", "r")
     prekazky = prekazkyFile.read().split("\n")
     prekazky = list(filter(None, prekazky))
     
@@ -147,17 +150,16 @@ def pohyb():
     return obstacle
 
   while True:
-    global blockade
+    global blockade, prehraLabel
     obstacle=checkObstacles(poloha)
-    # if obstacle==True:
-    #   prehraMaster = Tk()
-    #   prehraMaster.title("Prehral si")
-    #   plocha = Canvas(master, width="400", height="200")
-    #   plocha.pack()
-      
-    #   prehraLabel=Label(prehraMaster,text="PREHRAL SI")
-    #   prehraLabel.pack()
-    #   break
+    if obstacle==True:
+      # !PREHRA
+      prehraLabel.configure(text="PRESRAL SI")
+      break
+    if 440+50<=x<=560 and 0<=y<=120:
+      # !VÝHRA
+      prehraLabel.configure(text="VYHRAL SI")
+      break
 
     if poloha == "up":
       if 0+50 < y:
@@ -177,12 +179,12 @@ def pohyb():
           y+=v
     elif poloha == "left":
       if 0+50 < x:
-        if blockade and opening and 685-50<=x<=715+50 and 365<=y<=395:
+        if blockade and opening and 685-50<=x<=715+50 and 350<=y<=410:
           canvas.delete(blockade)
           canvas.delete(opening)
           blockade=0
         elif 625-50<=x<=655+50 and 525<=y<=555:
-          v=10
+          v=5
           canvas.delete(speed)
 
         if obstacle == False:
@@ -194,7 +196,7 @@ def pohyb():
     elif poloha == "right":
       if x < width-50:
         if 625-50<=x<=655+50 and 525<=y<=555:
-          v=10
+          v=5
           canvas.delete(speed)
 
         if obstacle == False:
@@ -203,11 +205,6 @@ def pohyb():
           canvas.move(korba,+v,0)
           canvas.move(delo,+v,0)
           x+=v
-
-    if 440+50<=x<=560 and 0<=y<=120:
-      break
-    canvas.after(1)
-    canvas.update()
 
 canvas.bind_all('<Down>',rotateDown)
 canvas.bind_all('<Right>',rotateRight)
