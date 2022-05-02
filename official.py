@@ -1,5 +1,6 @@
 from cProfile import label
 from tkinter import *
+from tkinter import ttk
 from time import *
 master=Tk()
 master.title("*Tančíkové bludisko*")
@@ -14,9 +15,9 @@ y = 750
 canvas=Canvas(master, width=width, height=height)
 canvas.pack()
 ### ?OBJEKTY ###
-prehraLabel=Label(master,text="", font=("Courier", 30))
+prehraLabel=Label(master, text="", font=("Courier", 30))
 prehraLabel.pack()
-prehraLabel.place(x=425,y=350)
+prehraLabel.place(x=425, y=350)
 ### !TANK ###
 lavyPas=canvas.create_rectangle(x-30, y-30, x-30+5, y+30, fill="#1b4332")
 pravyPas=canvas.create_rectangle(x+30, y-30, x+30-5, y+30, fill="#1b4332")
@@ -96,7 +97,7 @@ def rotateRight(event):
 
 def reset(event):
     # !ešte treba pridať 2 kocečky !!!!
-    global x, y, poloha, prehraLabel
+    global x, y, poloha, prehraLabel, blockade, opening, speed
     y=750
     x=500
     canvas.coords(delo,x-2.5,y-50,x+2.5,y)
@@ -105,6 +106,20 @@ def reset(event):
     canvas.coords(pravyPas,x+30, y-30, x+30-5, y+30)
     poloha="up"
     prehraLabel.configure(text="", bg="white")
+    
+    # def checkForObject(object):
+    #   if object not in canvas.find_all():
+    #     print(f"{object} not in canvas")
+    # checkForObject(blockade)
+    # checkForObject(opening)
+    # checkForObject(speed)
+    if blockade not in canvas.find_all():
+      blockade = canvas.create_rectangle(320, 190, 440, 200, fill="black")
+    if opening not in canvas.find_all():
+      opening = canvas.create_rectangle(685, 365, 715, 395, outline="red")
+    if speed not in canvas.find_all():
+      speed = canvas.create_rectangle(625, 525, 655, 555, outline="red")
+
     canvas.update()
     master.after(1, pohyb)
 
