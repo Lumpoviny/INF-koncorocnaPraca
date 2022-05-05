@@ -14,16 +14,20 @@ y = 750
 ### ?CANVAS ###
 canvas=Canvas(master, width=width, height=height)
 canvas.pack()
-### ?OBJEKTY ###
-prehraLabel=Label(master, text="", font=("Courier", 30))
-prehraLabel.pack()
-prehraLabel.place(x=425, y=350)
 ### !TANK ###
 lavyPas=canvas.create_rectangle(x-30, y-30, x-30+5, y+30, fill="#1b4332")
 pravyPas=canvas.create_rectangle(x+30, y-30, x+30-5, y+30, fill="#1b4332")
 korba=canvas.create_rectangle(x-25, y-25, x+25, y+25, fill="#40916c")
 delo=canvas.create_rectangle(x-2.5, y-50, x+2.5, y, fill="#95d5b2")
 poloha="up"
+### ?OBJEKTY ###
+prehraLabel=Label(master, text="", font=("Courier", 30))
+prehraLabel.pack()
+prehraLabel.place(x=425, y=350)
+
+sipkaLabel=Label(master, text="<=", font=("Courier", 30))
+sipkaLabel.pack()
+sipkaLabel.place(x=475, y=525)
 ### !PREKÁŽKY ###
 prekazkyFile = open("prekazky.txt", "r")
 prekazky = prekazkyFile.read().split("\n")
@@ -202,7 +206,7 @@ def pohyb():
           canvas.delete(blockade)
           canvas.delete(opening)
           blockade=0
-        elif 625-50<=x<=655+50 and 525<=y<=555:
+        elif 625-50<=x<=655+50 and 525-50<=y<=555+50:
           v=2
           canvas.delete(speed)
 
@@ -214,7 +218,7 @@ def pohyb():
           x-=v
     elif poloha == "right":
       if x < width-50:
-        if 625-50<=x<=655+50 and 525<=y<=555:
+        if 625-50<=x<=655+50 and 525-50<=y<=555+50:
           v=2
           canvas.delete(speed)
 
