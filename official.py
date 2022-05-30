@@ -14,6 +14,10 @@ y = 750
 ### ?CANVAS ###
 canvas=Canvas(master, width=width, height=height)
 canvas.pack()
+### !ŠÍPKA ###
+sipkaLabel=Label(master, text="<=", font=("Courier", 30))
+sipkaLabel.pack()
+sipkaLabel.place(x=475, y=525)
 ### !TANK ###
 lavyPas=canvas.create_rectangle(x-30, y-30, x-30+5, y+30, fill="#1b4332")
 pravyPas=canvas.create_rectangle(x+30, y-30, x+30-5, y+30, fill="#1b4332")
@@ -24,10 +28,6 @@ poloha="up"
 prehraLabel=Label(master, text="", font=("Courier", 30))
 prehraLabel.pack()
 prehraLabel.place(x=425, y=350)
-
-sipkaLabel=Label(master, text="<=", font=("Courier", 30))
-sipkaLabel.pack()
-sipkaLabel.place(x=475, y=525)
 ### !PREKÁŽKY ###
 prekazkyFile = open("prekazky.txt", "r")
 prekazky = prekazkyFile.read().split("\n")
