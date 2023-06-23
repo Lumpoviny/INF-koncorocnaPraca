@@ -29,7 +29,7 @@ prehraLabel=Label(master, text="", font=("Courier", 30))
 prehraLabel.pack()
 prehraLabel.place(x=425, y=350)
 ### !PREKÁŽKY ###
-prekazkyFile = open("./tank-koncorocnaPraca/prekazky.txt", "r")
+prekazkyFile = open("tankova-hra/prekazky.txt", "r")
 prekazky = prekazkyFile.read().split("\n")
 prekazky = list(filter(None, prekazky))
 def getCoordinates(lst):
@@ -135,7 +135,7 @@ def pohyb():
     global blockade
     obstacle=False
     ##!PREKAZKY##
-    prekazkyFile = open("./tank-koncorocnaPraca/prekazky.txt", "r")
+    prekazkyFile = open("tankova-hra/prekazky.txt", "r")
     prekazky = prekazkyFile.read().split("\n")
     prekazky = list(filter(None, prekazky))
     
